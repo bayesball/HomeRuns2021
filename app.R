@@ -23,7 +23,6 @@ date_2021_lo <- ymd("2021-04-01")
 
 # create in-play 2021 dataset
 sc_2021 %>%
-  filter(type == "X") %>%
  mutate(HR = ifelse(events == "home_run", 1, 0),
         game_date = Game_Date)  %>% 
   select(game_year, game_date, launch_angle,
