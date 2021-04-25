@@ -17,4 +17,3 @@ To run:
 
 shiny::runApp()
 
-![GitHub Logo](/images/snapshot.png)
