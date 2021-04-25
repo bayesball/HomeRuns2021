@@ -14,7 +14,7 @@ date_2021_hi <- current_date - 1
 
 # read in statcast dataset
 sc_2021 <- read_csv("statcast2021.csv")
-scip <- read_csv("SC_Batted_Ball.csv")
+scip <- read_csv("SC_BB_mini.csv")
 
 # adjust 2021 date if necessary
 date_2021_hi <- min(date_2021_hi,
