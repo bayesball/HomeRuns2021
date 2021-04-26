@@ -6,7 +6,7 @@ One selects a range of dates and brushes a rectangular region of (launch angle, 
 values.  App will compute the count and rate of balls in play (BIP) in that region for that range of dates.  Also it will
 compute the count and rate of home runs (HR) in that region.
 
-A live version of this Shiny app is available at https://bayesball.shinyapps.io/HomeRunRates2021/
+A live enhanced version of this Shiny app is available at https://bayesball.shinyapps.io/HomeRunRates2021/
 
 Requires the following R packages:
 
