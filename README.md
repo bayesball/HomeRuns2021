@@ -1,8 +1,12 @@
 # HomeRuns2021
 
-Shiny app to explore launch condition and home run rates for the 2021 MLB season and compare these with previous Statcast seasons.
+Shiny app to explore home run rates for Statcast seasons.
 
-A live version of this Shiny app can be found at https://bayesball.shinyapps.io/HomeRunRates2021/
+One selects a range of dates and brushes a rectangular region of (launch angle, exit velocity)
+values.  App will compute the count and rate of balls in play (BIP) in that region.  Also it will
+compute the count and rate of home runs (HR) in that region.
+
+A live version of this Shiny app is available at https://bayesball.shinyapps.io/HomeRunRates2021/
 
 Requires the following R packages:
 
