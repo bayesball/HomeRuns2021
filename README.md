@@ -1,23 +1,34 @@
 # HomeRuns2021
 
-Shiny app to explore home run rates for Statcast seasons 2015 through 2021.
+Shiny apps to explore home run rates for Statcast seasons 2015 through 2021.
 
-One selects a range of dates and brushes a rectangular region of (launch angle, exit velocity)
+HomeRunRates2021
+
+One selects a range of dates and use sliders to select a rectangular region of (launch angle, exit velocity)
 values.  App will compute the count and rate of balls in play (BIP) in that region for that range of dates.  Also it will
 compute the count and rate of home runs (HR) in that region.
 
-A live enhanced version of this Shiny app is available at https://bayesball.shinyapps.io/HomeRunRates2021/
+A live version of this Shiny app is available at https://bayesball.shinyapps.io/HomeRunRates2021/
 
-Requires the following R packages:
+HomeRunCompare
 
-shiny, ggplot2, readr, dplyr, lubridate
+One selects a range of dates and two seasons to compare.  The app will compare the batted ball rates and 
+the home run rates in bins of values defined by launch angle and exit velocity.  One can compare the rates
+by either differences in percentages or a z statistic.
 
-To run this Shiny app locally and see the code:
+A live version of this Shiny app is available at https://bayesball.shinyapps.io/HomeRunCompare/
 
-- download this respository as a zip file
-- unpack the zip file
-- launch R and make this folder the current working directory
+The R code for each Shiny app is available as the file app.R in the folders HomeRunRates2021 and HomeRunCompare.
+
+To run the Shiny app locally ...
+
+- download the app.R file and place it in a folder
+- launch R and make the folder the current working directory
 - type in the Console window
 
 shiny::runApp()
+
+Note:  Each app requires that the following R packages are installed:
+
+shiny, ggplot2, readr, dplyr, lubridate
 
