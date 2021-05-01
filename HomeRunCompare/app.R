@@ -228,7 +228,11 @@ server <- function(input, output, session) {
     
     if(input$stat == "Z"){
       out %>% 
-        filter(is.na(Z2) == FALSE) -> out
+        filter(is.na(Z1) == FALSE) -> out
+    }
+    if(input$stat == "difference in PCT"){
+      out %>% 
+        filter(is.na(Diff1) == FALSE) -> out
     }
     
     if(input$stat == "difference in PCT"){
@@ -303,6 +307,10 @@ server <- function(input, output, session) {
     if(input$stat == "Z"){
     out %>% 
       filter(is.na(Z2) == FALSE) -> out
+    }
+    if(input$stat == "difference in PCT"){
+      out %>% 
+        filter(is.na(Diff2) == FALSE) -> out
     }
     
     if(input$stat == "difference in PCT"){
