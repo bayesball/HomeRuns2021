@@ -10,13 +10,13 @@ compute the count and rate of home runs (HR) in that region.
 
 A live version of this Shiny app is available at https://bayesball.shinyapps.io/HomeRunRates2021/
 
-HomeRunCompare
+HomeRunsCompare
 
 One selects a range of dates and two seasons to compare.  The app will compare the batted ball rates and 
 the home run rates in bins of values defined by launch angle and exit velocity.  One can compare the rates
 by either differences in percentages or a z statistic.
 
-A live version of this Shiny app is available at https://bayesball.shinyapps.io/HomeRunCompare/
+A live version of this Shiny app is available at https://bayesball.shinyapps.io/HomeRunsCompare/
 
 The R code for each Shiny app is available as the file app.R in the folders HomeRunRates2021 and HomeRunCompare.
 
