@@ -143,10 +143,21 @@ server <- function(input, output, session) {
       xlab("Launch Angle (degrees)") +
       ylab("Exit Velocity (mph)") +
       theme(plot.title = 
-              element_text(colour = "blue", size = 18,
+              element_text(colour = "white", size = 18,
                hjust = 0.5, vjust = 0.8, angle = 0)) +
       theme(text=element_text(size=18)) +
-      scale_color_manual(values = c("orange", "blue"))
+      scale_color_manual(values = c("orange", "blue")) +
+      theme(plot.background = element_rect(fill = 
+                                  "coral3"),
+            axis.text = element_text(color = "white"),
+            axis.title = element_text(color = "white")) +
+      theme(
+        panel.background = element_rect(fill = "white",
+                                        colour = "grey")) +
+      theme(legend.background = element_rect(
+                               fill="coral3",
+                            size=0.5, linetype="solid", 
+                              colour ="darkblue"))
   }, res = 96)
   
   output$table1 <- renderTable({
