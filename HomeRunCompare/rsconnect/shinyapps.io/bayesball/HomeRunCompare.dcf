@@ -1,0 +1,13 @@
+name: HomeRunCompare
+title: HomeRunCompare
+username:
+account: bayesball
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 4172175
+bundleId: 4630339
+url: https://bayesball.shinyapps.io/HomeRunCompare/
+when: 1621783569.4656
+lastSyncTime: 1621783569.46562
+asMultiple: FALSE
+asStatic: FALSE
