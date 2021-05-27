@@ -5,9 +5,9 @@ account: bayesball
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
 appId: 4172175
-bundleId: 4634864
+bundleId: 4641803
 url: https://bayesball.shinyapps.io/HomeRunCompare/
-when: 1621890075.66839
-lastSyncTime: 1621890075.66843
+when: 1622028230.70156
+lastSyncTime: 1622028230.70158
 asMultiple: FALSE
 asStatic: FALSE
