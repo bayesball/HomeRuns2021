@@ -1,0 +1,13 @@
+Datafile runs_scored_2021.csv
+Description of variables
+----------------------------------------------------
+HALF.INNING - identification of half-inning
+Outs.Inning - number of outs in half-inning
+Runs.Inning - number of runs scored in half-inning
+Team - batting team
+Home - indication of home (1) or away (0)
+Pitcher - Retrosheet code for pitcher
+SP - number of runners in scoring position
+R_SP - number of runners from scoring position who score
+Estimate - estimate at the pitcher Runs ability
+League - team league
