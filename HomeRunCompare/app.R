@@ -30,7 +30,7 @@ sc_2021 %>%
  scip_2021
 
 # merge two datasets
-rbind(scip, scip_2021)  %>%
+rbind(scip[, c(1:4, 6)], scip_2021)  %>%
   filter(game_year %in% 2015:2021) -> scip
 
 # want HR variable to be character

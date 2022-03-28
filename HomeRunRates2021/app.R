@@ -25,13 +25,13 @@ date_2021_lo <- ymd("2021-04-01")
 # create in-play 2021 dataset
 sc_2021 %>%
  mutate(HR = ifelse(events == "home_run", 1, 0),
-        game_date = Game_Date)  %>% 
+        game_date = Game_Date)  %>%
   select(game_year, game_date, launch_angle,
-         launch_speed, HR) -> 
+         launch_speed, HR) ->
  scip_2021
 
 # merge two datasets
-rbind(scip, scip_2021)  %>% 
+rbind(scip[, c(1:4, 6)], scip_2021)  %>%
   filter(game_year %in% 2015:2021) -> scip
 
 # want HR variable to be character
@@ -83,13 +83,13 @@ ui <- fluidPage(
                p("This Shiny app explores patterns
       of hard-hit ball and home run rates over the Statcast era.  One selects a
       range of days and chooses a rectangular region of values of
-      the launch angle and exit velocity.  For each of the 
-      Statcast seasons, the Table of Rates tab displays the count and rate of batted 
-      balls in play 
+      the launch angle and exit velocity.  For each of the
+      Statcast seasons, the Table of Rates tab displays the count and rate of batted
+      balls in play
       and the count and rate of home runs from the selected region.
        By choosing the Graph of Rates tab, one sees a graph of the batted ball
         rates and HR rates plotted against season."),
-      p("This app will reflect current 2021 data as the season 
+      p("This app will reflect current 2021 data as the season
         progresses."),
       p("All data is made available through Baseball Savant through the
         website http://baseballsavant.mlb.com.  The data was scraped using
@@ -107,23 +107,23 @@ server <- function(input, output, session) {
                  day(input$date_lo), sep = "")
     md2 <- paste(month(input$date_hi), "-",
                  day(input$date_hi), sep = "")
-    scip %>% 
+    scip %>%
       mutate(date1 = ymd(paste(game_year, "-", md1,
                                sep = "")),
              date2 = ymd(paste(game_year, "-", md2,
-                               sep = ""))) %>% 
+                               sep = ""))) %>%
       filter(game_date >= date1,
              game_date <= date2) -> scipR
-    
+
 #    scnew <- sample_n(scipR, size = 10000)
-    
+
     md1 <- paste(month(input$date_lo), "-",
                  day(input$date_lo), sep = "")
     md2 <- paste(month(input$date_hi), "-",
                  day(input$date_hi), sep = "")
     the_title <- paste("Batted Balls from ", md1, " to ",
                        md2, sep = "")
-    
+
     rect <- data.frame(x = c(input$LA[1], input$LA[2],
           input$LA[2], input$LA[1], input$LA[1]),
           y = c(input$EV[1], input$EV[1], input$EV[2],
@@ -136,18 +136,18 @@ server <- function(input, output, session) {
                              color = HR),
               size = 1, alpha = 0.4
              ) +
-    geom_path(data = rect, aes(x, y), 
+    geom_path(data = rect, aes(x, y),
               color = "black", size = 1.5) +
       xlim(15, 50) + ylim(90, 120) +
       ggtitle(the_title) +
       xlab("Launch Angle (degrees)") +
       ylab("Exit Velocity (mph)") +
-      theme(plot.title = 
+      theme(plot.title =
               element_text(colour = "white", size = 18,
                hjust = 0.5, vjust = 0.8, angle = 0)) +
       theme(text=element_text(size=18)) +
       scale_color_manual(values = c("orange", "blue")) +
-      theme(plot.background = element_rect(fill = 
+      theme(plot.background = element_rect(fill =
                                   "coral3"),
             axis.text = element_text(color = "white"),
             axis.title = element_text(color = "white")) +
@@ -156,29 +156,29 @@ server <- function(input, output, session) {
                                         colour = "grey")) +
       theme(legend.background = element_rect(
                                fill="coral3",
-                            size=0.5, linetype="solid", 
+                            size=0.5, linetype="solid",
                               colour ="darkblue"))
   }, res = 96)
-  
+
   output$table1 <- renderTable({
-    
+
       md1 <- paste(month(input$date_lo), "-",
                  day(input$date_lo), sep = "")
       md2 <- paste(month(input$date_hi), "-",
                  day(input$date_hi), sep = "")
-      
-      scip %>% 
+
+      scip %>%
         mutate(date1 = ymd(paste(game_year, "-", md1,
                                  sep = "")),
                date2 = ymd(paste(game_year, "-", md2,
-                                 sep = ""))) %>% 
+                                 sep = ""))) %>%
        filter(game_date >= date1,
               game_date <= date2) -> scipR
-    
-      scipR %>% 
-        group_by(game_year) %>% 
+
+      scipR %>%
+        group_by(game_year) %>%
         summarize(N = n()) -> S1
-      
+
       sc1 <- filter(scipR,
                     launch_angle >= input$LA[1],
                     launch_angle <= input$LA[2],
@@ -190,20 +190,20 @@ server <- function(input, output, session) {
       la_hi <- input$LA[2]
       ls_lo <- input$EV[1]
       ls_hi <- input$EV[2]
-      
-      label <- paste(round(la_lo, 1), "< LA <", 
+
+      label <- paste(round(la_lo, 1), "< LA <",
                      round(la_hi, 1),
-                     ", ", 
+                     ", ",
                      round(ls_lo, 1),
                      "< LS <",
                      round(ls_hi, 1), sep="")
-      
-      sc1 %>% 
-        group_by(game_year) %>% 
+
+      sc1 %>%
+        group_by(game_year) %>%
         summarize(BIP = n(),
-                  HR = sum(HR == "YES", 
-                           na.rm = TRUE)) %>% 
-        inner_join(S1, by = "game_year") %>% 
+                  HR = sum(HR == "YES",
+                           na.rm = TRUE)) %>%
+        inner_join(S1, by = "game_year") %>%
         mutate(LA_lo = as.character(round(la_lo, 1)),
                LA_hi = as.character(round(la_hi, 1)),
                LS_lo = as.character(round(ls_lo, 1)),
@@ -211,31 +211,31 @@ server <- function(input, output, session) {
                Rate = 100 * BIP / N,
                HR_Rate = as.character(
                     round(100 * HR / BIP, 1)),
-               Season = as.character(game_year)) %>% 
-        select(Season, 
-               LA_lo, LA_hi, LS_lo, LS_hi, 
-               BIP, Rate, HR, HR_Rate) 
+               Season = as.character(game_year)) %>%
+        select(Season,
+               LA_lo, LA_hi, LS_lo, LS_hi,
+               BIP, Rate, HR, HR_Rate)
   }, digits = 2)
-  
+
   output$plot2 <- renderPlot({
-    
+
     md1 <- paste(month(input$date_lo), "-",
                  day(input$date_lo), sep = "")
     md2 <- paste(month(input$date_hi), "-",
                  day(input$date_hi), sep = "")
-    
-    scip %>% 
+
+    scip %>%
       mutate(date1 = ymd(paste(game_year, "-", md1,
                                sep = "")),
              date2 = ymd(paste(game_year, "-", md2,
-                               sep = ""))) %>% 
+                               sep = ""))) %>%
       filter(game_date >= date1,
              game_date <= date2) -> scipR
-    
-    scipR %>% 
-      group_by(game_year) %>% 
+
+    scipR %>%
+      group_by(game_year) %>%
       summarize(N = n()) -> S1
-    
+
     sc1 <- filter(scipR,
                   launch_angle >= input$LA[1],
                   launch_angle <= input$LA[2],
@@ -247,32 +247,32 @@ server <- function(input, output, session) {
     la_hi <- input$LA[2]
     ls_lo <- input$EV[1]
     ls_hi <- input$EV[2]
-    
-    label <- paste(round(la_lo, 1), "≤ Launch Angle ≤", 
+
+    label <- paste(round(la_lo, 1), "≤ Launch Angle ≤",
                    round(la_hi, 1),
-                   ", ", 
+                   ", ",
                    round(ls_lo, 1),
                    "≤ Exit Velocity ≤",
                    round(ls_hi, 1), sep=" ")
     label2 <- paste("Dates: ", md1, " to ",
                        md2, sep = "")
-    
-    sc1 %>% 
-      group_by(game_year) %>% 
+
+    sc1 %>%
+      group_by(game_year) %>%
       summarize(BIP = n(),
-                HR = sum(HR == "YES", 
-                         na.rm = TRUE)) %>% 
-      inner_join(S1, by = "game_year") %>% 
+                HR = sum(HR == "YES",
+                         na.rm = TRUE)) %>%
+      inner_join(S1, by = "game_year") %>%
       mutate(Rate = round(100 * BIP / N, 2),
              HR_Rate = round(100 * HR / BIP, 1),
-             Season = game_year) -> out 
+             Season = game_year) -> out
       out1 <- data.frame(Season = as.numeric(out$Season),
                          Rate = out$Rate,
                          Type = "Balls in Play Rate")
       out2 <- data.frame(Season = as.numeric(out$Season),
                          Rate = out$HR_Rate,
                          Type = "Home Run Rate")
-      ggplot(rbind(out1, out2), 
+      ggplot(rbind(out1, out2),
              aes(Season, Rate)) +
         geom_point(color = "red", size = 4) +
         facet_wrap(~ Type, ncol = 1,
@@ -280,15 +280,15 @@ server <- function(input, output, session) {
         labs(title = label2,
              subtitle = label) +
         ylab("Rate (Pct)") +
-        theme(plot.title = 
+        theme(plot.title =
                 element_text(colour = "blue", size = 18,
                  hjust = 0.5, vjust = 0.8, angle = 0),
-              plot.subtitle = 
+              plot.subtitle =
                 element_text(colour = "blue", size = 18,
                              hjust = 0.5, vjust = 0.8, angle = 0)) +
         theme(text=element_text(size=18)) +
         theme(strip.text.x = element_text(size=16, face="bold"),
-              strip.background = element_rect(colour="red", 
+              strip.background = element_rect(colour="red",
                                               fill="#CCCCFF"))
   })
 }
